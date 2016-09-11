@@ -1,6 +1,6 @@
-# Makemake PHP Framework
+# MakeMake PHP Framework
 
-**Makemake ist still in a very early stage of development.**
+**MakeMake ist still in a very early stage of development.**
 
 I am working a lot with oop frameworks but I never really new how they
 work deep inside their core. So I thought the best way to learn is to

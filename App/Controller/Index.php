@@ -8,12 +8,20 @@ class Index extends Controller
 {
     public function index()
     {
-        die('this is the index action');
+        $this->view->assign('headline', 'Hello World!');
     }
 
 
     public function test()
     {
-        die('and this is the test action');
+        $this->view->assign('headline', 'This is the headline of the test action');
+        $this->view->assign('content', 'This test was successful!');
+    }
+
+
+    public function override()
+    {
+        $this->view->assign('headline', 'Now wie use the index/index.php to show the content of the override action');
+        $this->view->loadTemplate('index/index.php');
     }
 }

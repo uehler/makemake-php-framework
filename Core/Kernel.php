@@ -48,8 +48,12 @@ class Kernel
         $request = new Request();
 
         $ctrlPath = 'App\\Controller\\' . ucfirst($request->getController());
+
+        /** @var Controller $controller */
         $controller = new $ctrlPath($request, $this->config);
 
+        $controller->preDispatch();
         $controller->{$request->getAction()}();
+        $controller->postDispatch();
     }
 }

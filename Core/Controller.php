@@ -9,6 +9,7 @@ class Controller
 {
     protected $request;
     protected $config;
+    protected $view;
 
 
     public function __construct(Request $request, Config $config)
@@ -16,6 +17,19 @@ class Controller
         $this->request = $request;
         $this->config = $config;
 
-        $view = new View();
+        $dirs = $config->get('directories');
+
+        $this->view = new View($request->getController(), $request->getAction(), $dirs['theme'], $dirs['customThemeDir']);
+    }
+
+
+    public function preDispatch()
+    {
+    }
+
+
+    public function postDispatch()
+    {
+        $this->view->render();
     }
 }

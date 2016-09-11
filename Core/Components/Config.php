@@ -12,6 +12,8 @@ class Config
         'directories' => array(
             'app' => 'App',
             'core' => 'Core',
+            'theme' => 'Theme',
+            'customThemeDir' => null // inside of Theme
         ),
 
         'db' => array(
