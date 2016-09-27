@@ -32,4 +32,12 @@ class Controller
     {
         $this->view->render();
     }
+
+
+    public function getModel($model)
+    {
+        $str = '\App\Model\\' . ucfirst($model);
+
+        return new $str($this->config->get('db'));
+    }
 }
