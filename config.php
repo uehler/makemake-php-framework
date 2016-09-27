@@ -2,13 +2,18 @@
 return array(
     'version' => '0.2.0',
 
-    'environment' => 'live', // or live
+    'environment' => 'dev', // or live
 
     'db' => array(
         'user' => '',
         'password' => '',
-        'database' => '',
+        'dbname' => '',
         // 'host' => '',
-        // 'port' => ''
+        // 'port' => '',
+        // 'charset' => '',
+    ),
+
+    'directories' => array(
+        // 'customThemeDir' => ''
     ),
 );
