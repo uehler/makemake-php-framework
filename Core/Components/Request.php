@@ -43,9 +43,9 @@ class Request
     }
 
 
-    public function getPost()
+    public function getPost($key = null)
     {
-        return $this->post;
+        return $key === null ? $this->post : $this->post->$key;
     }
 
 
