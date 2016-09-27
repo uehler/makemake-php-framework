@@ -15,6 +15,7 @@ class View
         $this->defaultTemplate = $controller . DIRECTORY_SEPARATOR . $action . '.php';
         $this->themePath = $themePath;
         $this->themeDir = $themeDir;
+        $this->data = new \stdClass();
     }
 
 
