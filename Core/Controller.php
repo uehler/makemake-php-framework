@@ -38,6 +38,6 @@ class Controller
     {
         $str = '\App\Model\\' . ucfirst($model);
 
-        return new $str($this->config->get('db'));
+        return new $str();
     }
 }

@@ -21,7 +21,7 @@ class User extends Model
 
                 ALTER TABLE `user`
                     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;';
-        $this->query($sql);
+        $this->db->query($sql);
     }
 
 
@@ -30,7 +30,7 @@ class User extends Model
         $sql = 'SELECT * 
                 FROM user';
 
-        return $this->fetchAll($sql);
+        return $this->db->fetchAll($sql);
     }
 
 
@@ -40,7 +40,7 @@ class User extends Model
                 FROM user
                 WHERE id = :userID';
 
-        return $this->fetchRow($sql, array('userID' => $userID));
+        return $this->db->fetchRow($sql, array('userID' => $userID));
     }
 
 
@@ -50,7 +50,7 @@ class User extends Model
                 FROM user
                 WHERE email = ?';
 
-        return $this->fetchOne($sql, array($email));
+        return $this->db->fetchOne($sql, array($email));
     }
 
 
@@ -59,7 +59,7 @@ class User extends Model
         $sql = 'SELECT email
                 FROM user';
 
-        return $this->fetchCol($sql);
+        return $this->db->fetchCol($sql);
     }
 
 
@@ -71,6 +71,6 @@ class User extends Model
                     firstname = ?,
                     lastname = ?,
                     email = ?';
-        $this->query($sql, array($firstname, $lastname, $email));
+        $this->db->query($sql, array($firstname, $lastname, $email));
     }
 }
