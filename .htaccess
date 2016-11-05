@@ -1,5 +1,13 @@
-<IfModule mod_rewrite.c>
-  RewriteEngine on
-  RewriteCond %{REQUEST_URI} !(\/Theme\/)
-  RewriteRule ^(.*)/(.*)$ index.php?controller=$1&action=$2 [QSA]
-</IfModule>
+RewriteEngine On
+# Prevent people from looking directly into folders
+Options -Indexes
+
+# some conditions for the url rewrite
+# request may not be an existing directory
+RewriteCond %{REQUEST_FILENAME} !-d
+# request may not be an existing file
+RewriteCond %{REQUEST_FILENAME} !-f
+# request may not be an exisiting symbolic link
+RewriteCond %{REQUEST_FILENAME} !-l
+# if conditions are true store the request in the url-param
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]

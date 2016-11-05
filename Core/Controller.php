@@ -40,4 +40,14 @@ class Controller
 
         return new $str();
     }
+
+
+    /**
+     * the error page
+     */
+    public function error()
+    {
+        header("HTTP/1.0 404 Not Found");
+        $this->view->loadTemplate('_default/error.php');
+    }
 }

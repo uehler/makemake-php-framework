@@ -8,25 +8,29 @@ use Core\Components\Request;
 class Kernel
 {
     protected $config;
+    /** @var Request */
+    protected $request;
 
 
     public function __construct(Config $config)
     {
         $this->config = $config;
+        $this->request = new Request();
     }
 
 
     public function load()
     {
-        $request = new Request();
-
-        $ctrlPath = 'App\\Controller\\' . ucfirst($request->getController());
+        $ctrlPath = 'App\\Controller\\' . ucfirst($this->request->getController());
 
         /** @var Controller $controller */
-        $controller = new $ctrlPath($request, $this->config);
-
+        $controller = new $ctrlPath($this->request, $this->config);
         $controller->preDispatch();
-        $controller->{$request->getAction()}();
+        if (method_exists($controller, $this->request->getAction())) {
+            $controller->{$this->request->getAction()}();
+        } else {
+            $controller->error();
+        }
         $controller->postDispatch();
     }
 }
