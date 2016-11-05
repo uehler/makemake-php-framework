@@ -21,82 +21,201 @@ class Request
     }
 
 
+    /**
+     * returns the requested controller
+     *
+     * @return string
+     */
     public function getController()
     {
-        if (empty($this->get->controller)) {
-            $this->setGet('controller', self::DEFAULTCONTROLLER);
-        }
-
-        return $this->get->controller;
+        return !empty($this->get->controller) ? $this->get->controller : self::DEFAULTCONTROLLER;
     }
 
 
+    /**
+     * returns the requested controller action
+     *
+     * @return string
+     */
     public function getAction()
     {
-        if (empty($this->get->action)) {
-            $this->setGet('action', self::DEFAULTACTION);
-        }
-
-        return $this->get->action;
+        return !empty($this->get->action) ? $this->get->action : self::DEFAULTACTION;
     }
 
 
+    /**
+     * returns all parameters
+     *
+     * @return object
+     */
     public function getParams()
     {
         return $this->params;
     }
 
 
+    /**
+     * returns the value of the given parameter or the default value if the parameter does not exist
+     *
+     * @param string $param
+     * @param mixed  $default
+     *
+     * @return mixed|null
+     */
     public function getParam(string $param, $default = null)
     {
         return isset($this->params->$param) ? $this->params->$param : $default;
     }
 
 
+    /**
+     * sets a new parameter or updates an existing one
+     *
+     * @param string $param
+     * @param mixed  $value
+     */
     public function setParam(string $param, $value = null)
     {
         $this->params->$param = $value;
     }
 
 
-    public function getPost(string $key = null)
-    {
-        return $key === null ? $this->post : $this->post->$key;
-    }
-
-
-    public function setPost(string $param, $value = null)
-    {
-        $this->post->$param = $value;
-        $this->params->$param = $value;
-    }
-
-
-    public function getGet()
+    /**
+     * returns all get parameters
+     *
+     * @return object
+     */
+    public function getGetParams()
     {
         return $this->get;
     }
 
 
-    public function setGet(string $param, $value = null)
+    /**
+     * returns the value of the given get parameter or the default value if the parameter does not exist
+     *
+     * @param string $param
+     * @param mixed  $default
+     *
+     * @return mixed|null
+     */
+    public function getGetParam(string $param, $default = null)
+    {
+        return isset($this->get->$param) ? $this->get->$param : $default;
+    }
+
+
+    /**
+     * sets a new get parameter or updates an existing one
+     *
+     * @param string $param
+     * @param mixed  $value
+     */
+    public function setGetParam(string $param, $value = null)
     {
         $this->get->$param = $value;
-        $this->params->$param = $value;
+        $this->setParam($param, $value);
+    }
+
+
+    /**
+     * returns all post parameters
+     *
+     * @return object
+     */
+    public function getPostParams()
+    {
+        return $this->post;
+    }
+
+
+    /**
+     * returns the value of the given post parameter or the default value if the parameter does not exist
+     *
+     * @param string $param
+     * @param mixed  $default
+     *
+     * @return mixed|null
+     */
+    public function getPostParam(string $param, $default = null)
+    {
+        return isset($this->post->$param) ? $this->post->$param : $default;
+    }
+
+
+    /**
+     * sets a new post parameter or updates an existing one
+     *
+     * @param string $param
+     * @param mixed  $value
+     */
+    public function setPostParam(string $param, $value = null)
+    {
+        $this->post->$param = $value;
+        $this->setParam($param, $value);
+    }
+
+
+    /**
+     * @deprecated use getPostParams or getPostParam
+     *
+     * @param string|null $key
+     *
+     * @return object|mixed|null
+     */
+    public function getPost(string $key = null)
+    {
+        return $key === null ? $this->getPostParams() : $this->getPostParam($key);
+    }
+
+
+    /**
+     * @deprecated use setPostParam
+     *
+     * @param string $param
+     * @param mixed  $value
+     */
+    public function setPost(string $param, $value = null)
+    {
+        $this->setPostParam($param, $value);
+    }
+
+
+    /**
+     * @deprecated use getGetParams
+     * @return object
+     */
+    public function getGet()
+    {
+        return $this->getGetParams();
+    }
+
+
+    /**
+     * @deprecated use setGetParam
+     *
+     * @param string $param
+     * @param mixed  $value
+     */
+    public function setGet(string $param, $value = null)
+    {
+        $this->setGetParam($param, $value);
     }
 
 
     /**
      * splits the url to get controller and action
+     * required for routing
      */
     protected function splitUrl()
     {
         $url = $this->getParam('url');
 
         $url = explode('/', $url);
-        $this->setGet('controller', $url[0]);
+        $this->setGetParam('controller', $url[0]);
 
         if (isset($url[1])) {
-            $this->setGet('action', $url[1]);
+            $this->setGetParam('action', $url[1]);
         }
     }
 }
